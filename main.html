@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock paper scissors</title>
+</head>
+<body>
+    <script>
+
+// Gets player input and assigns it to playerSelection
+
+function getPlayerSelection(){ 
+ var inputSuggestion = prompt("Rock, paper, or scissors?");
+
+    if ("" + inputSuggestion.toLowerCase() == "rock") {
+    playerSelection = "rock";
+
+} else if ("" + inputSuggestion.toLowerCase() == "paper") { 
+    playerSelection = "paper"; 
+
+} else if ("" + inputSuggestion.toLowerCase() == "scissors") {
+    playerSelection = "scissors";
+
+} else { 
+    alert("you need to choose one")
+}
+}
+
+// Gets computers random choice and assigns it to computerSelection
+
+function getComputerSelection(){
+    gameChoices = [Math.random() * 3 | 0];
+
+    if(gameChoices == 0){
+        computerSelection = 'rock';
+
+    } else if(gameChoices == 1){
+        computerSelection = 'paper';
+
+    } else if(gameChoices == 2)
+        computerSelection = 'scissors';
+  }
+  
+
+
+// Puts the two choices together so they can always run at the same time
+
+function getBothChoices(){
+    getPlayerSelection();
+    getComputerSelection();
+}
+
+// Plays one round of Rock Paper Scissors
+
+
+        wins = 0;
+        loss = 0;
+        tie = 0;
+
+    function playRound() {  
+        getBothChoices()
+        gameResponse =  "null"
+
+      if (playerSelection == 'rock') {
+        if (computerSelection == 'rock') {
+          tie++
+          return 'It\'s a tie. Try again'
+        } else if (computerSelection == 'paper') {
+            loss++
+          return 'You lose. Paper beats Rock'
+        } else {
+            wins++
+          return 'You win. Rock beats scissors'
+        }
+
+      }
+
+      else if (playerSelection == 'paper') {
+        if (computerSelection == 'paper') {
+            tie++
+          return 'It\'s a tie. Try again'
+        }
+        if (computerSelection == 'scissors') {
+           loss++
+          return 'You lose. Scissors beats Paper'
+        } else {
+         wins++
+          return 'You win. Paper beats Rock'
+        }
+      }
+
+      else {
+        if (computerSelection == 'scissors') {
+            tie++
+          return 'It\'s a tie. Try again'
+        } else if (computerSelection == 'rock') {
+            loss++
+          return 'You lose. Rock beats Scissors'
+        } else {
+            wins++
+          return 'You win. Scissors beats Paper'
+        }
+        
+        }
+    }
+
+// Plays five rounds and logs how many you've lost or won
+    function game() {
+    var i = null;       
+        do{
+        i++;
+        console.log(playRound())
+       
+    } while(i < 5) {     
+        if(i >= 5) {   
+    return resultsMessage = ("You won this many times: [" + wins + 
+    "]  You lost this many times: [" + loss +
+     "] You tied this many times: [" + tie + "]")
+}
+}   
+    }
+
+
+</script>
+</body>
+</html>
+
+
