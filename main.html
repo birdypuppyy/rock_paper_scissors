@@ -4,127 +4,349 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock paper scissors</title>
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body> 
+<div class="wrapper"> 
+<div id = "playerLeftSide">
+  <div><br> <br><span>Your selection = </span></div> <br> <br>
+
+</div>
+
+<div class = "gameMiddle">  
+    <div class = "buttons">
+
+        <button onclick="playerChoice = 'rock'" id="rBtn">rock</button> 
+        <button onclick="playerChoice = 'paper'"  id="pBtn">paper</button> 
+        <button onclick="playerChoice = 'scissors'"  id="sBtn">scissors</button>
+    </div> <br> <br>
+    
+    <div class="choicesDiv">
+      <button  id = "subBtn"> Play!</button>
+    </div> <br>
+
+    <div id="runningCountDiv">
+    </div>    
+
+    <br>
+
+    <div id="displayDiv">
+    </div>
+
+    <br>
+
+    <div id="roundResultDiv"> </div>
+
+    <br>
+
+    <div id="roundWinsDiv"> </div>
+
+    <div id="roundResults"
+
+    </div>
+</div>
+      
+
+  </div>
+  <br>
+  <div id = "computerRightSide" class=> 
+    <div><br> <br><span>Computer selection = </span></div> <br> <br>
+  </div>
+</div>
     <script>
 
-// Gets player input and assigns it to playerSelection
+let playerChoice = '';
 
-function getPlayerSelection(){ 
- var inputSuggestion = prompt("Rock, paper, or scissors?");
+//Assigns the runningCount div an innerhtml value
+      let runningCountDiv = document.getElementById('runningCountDiv');
+      let runningCountContent = document.createElement('runningCountContent');
+      runningCountContent.textContent = 'Choose one!';
+      runningCountDiv.appendChild(runningCountContent)
+    
+    const roBtn = document.querySelector('#rBtn');
+    roBtn.addEventListener('click', () => {
+      roundResultMsg.textContent = ' ';
+      computerRightSideTxt.textContent = ' ';
+      updatePlayerSide()
+    });
 
-    if ("" + inputSuggestion.toLowerCase() == "rock") {
-    playerSelection = "rock";
+    const paBtn = document.querySelector('#pBtn');
+    paBtn.addEventListener('click', () => {
+      roundResultMsg.textContent = ' ';
+      computerRightSideTxt.textContent = ' ';
+      updatePlayerSide()
+    });
 
-} else if ("" + inputSuggestion.toLowerCase() == "paper") { 
-    playerSelection = "paper"; 
+    const scBtn = document.querySelector('#sBtn');
+    scBtn.addEventListener('click', () => {
+      roundResultMsg.textContent = ' ';
+      computerRightSideTxt.textContent = ' ';
+      updatePlayerSide()
+    });
 
-} else if ("" + inputSuggestion.toLowerCase() == "scissors") {
-    playerSelection = "scissors";
+    const subBtn = document.querySelector('#subBtn');
+    subBtn.addEventListener('click', () => {
+      updatePlayerSide()
+      getTotalWins();
+      playRound();
+      updateComputerSide();
 
-} else { 
-    alert("you need to choose one")
-}
-}
+    });
 
-// Gets computers random choice and assigns it to computerSelection
 
-function getComputerSelection(){
-    gameChoices = [Math.random() * 3 | 0];
 
-    if(gameChoices == 0){
+
+let playerLeftSide = document.getElementById('playerLeftSide');
+let playerLeftSideTxt = document.createElement('playerLeftSideTxt');
+
+
+var randomChoice = 0;
+
+  // function getRandom(){
+  //   randomChoice = Math.floor(Math.random() * 3 | 0);
+  // }
+
+  computerSelection = "";
+
+  function getComputerSelection(){
+    randomChoice = Math.floor(Math.random() * 3 | 0);
+    
+    if(randomChoice == 0){
         computerSelection = 'rock';
+        console.log(computerSelection)
 
-    } else if(gameChoices == 1){
+    } else if(randomChoice == 1){
         computerSelection = 'paper';
+        console.log(computerSelection)
 
-    } else if(gameChoices == 2)
+    } else if(randomChoice == 2){
         computerSelection = 'scissors';
+        console.log(computerSelection)
+    } else {
+    console.log('error')}
   }
-  
 
 
-// Puts the two choices together so they can always run at the same time
+let computerRightSide = document.getElementById('computerRightSide');
+let computerRightSideTxt = document.createElement('computerRightSideTxt');
 
-function getBothChoices(){
-    getPlayerSelection();
-    getComputerSelection();
+function updatePlayerSide(){
+
+playerLeftSideTxt.textContent = (playerChoice);
+playerLeftSide.appendChild(playerLeftSideTxt)}
+
+
+function updateComputerSide(){
+computerRightSideTxt.textContent = computerSelection;
+computerRightSide.appendChild(computerRightSideTxt)
 }
 
-// Plays one round of Rock Paper Scissors
+  function forRoundPlay(){
+    let divInnerString = ("Wins = [" + wins + "] Losses = [" + loss + "] Ties = [" + tie + "] Total = [" + (wins + loss + tie) + "]")
+    displayDivTxt.textContent = divInnerString;
+    displayDiv.appendChild(displayDivTxt);
+  }
 
-
-        wins = 0;
-        loss = 0;
-        tie = 0;
+      let  wins = 0;
+      let  loss = 0;
+      let  tie = 0;
+      
 
     function playRound() {  
-        getBothChoices()
-        gameResponse =  "null"
-
-      if (playerSelection == 'rock') {
+      getComputerSelection()
+      if (playerChoice == 'rock') {
         if (computerSelection == 'rock') {
           tie++
-          return 'It\'s a tie. Try again'
+          runningCountContent.textContent = 'It\'s a tie. Try again';
+          runningCountDiv.appendChild(runningCountContent);
+
+          forRoundPlay()
+          keepScore()
+            return tie;
         } else if (computerSelection == 'paper') {
             loss++
-          return 'You lose. Paper beats Rock'
+            runningCountContent.textContent = 'You lose. Paper beats Rock';
+            runningCountDiv.appendChild(runningCountContent) 
+
+            forRoundPlay()
+            keepScore()
+            return loss;
+
         } else {
             wins++
-          return 'You win. Rock beats scissors'
+            runningCountContent.textContent = 'You win. Rock beats scissors';
+            runningCountDiv.appendChild(runningCountContent); 
+
+            forRoundPlay()
+            keepScore()
+            return wins;
         }
 
-      }
-
-      else if (playerSelection == 'paper') {
+      } else if (playerChoice == 'paper') {
         if (computerSelection == 'paper') {
-            tie++
-          return 'It\'s a tie. Try again'
-        }
-        if (computerSelection == 'scissors') {
+          tie++
+          runningCountContent.textContent = 'It\'s a tie. Try again';
+          runningCountDiv.appendChild(runningCountContent);
+
+          forRoundPlay()
+          keepScore()
+
+            return tie;
+        } else if (computerSelection == 'scissors') {
            loss++
-          return 'You lose. Scissors beats Paper'
-        } else {
+           runningCountContent.textContent = 'You lose. Scissors beats Paper';
+           runningCountDiv.appendChild(runningCountContent);
+
+           forRoundPlay()
+           keepScore()
+
+          return loss;
+
+       } else {
          wins++
-          return 'You win. Paper beats Rock'
+         runningCountContent.textContent = 'You win. Paper beats Rock';
+         runningCountDiv.appendChild(runningCountContent);
+
+         forRoundPlay()
+         keepScore()
+
+        return wins;
         }
       }
 
       else {
         if (computerSelection == 'scissors') {
             tie++
-          return 'It\'s a tie. Try again'
+          
+        forRoundPlay()
+        keepScore()
+
+            runningCountContent.textContent = 'It\'s a tie. Try again';
+           runningCountDiv.appendChild(runningCountContent) 
+
+            return tie;
+
         } else if (computerSelection == 'rock') {
             loss++
-          return 'You lose. Rock beats Scissors'
+
+            forRoundPlay()
+            keepScore()
+
+            runningCountContent.textContent = 'You lose. Rock beats Scissors';
+            runningCountDiv.appendChild(runningCountContent) 
+
+            return loss;
+
         } else {
             wins++
-          return 'You win. Scissors beats Paper'
+
+            forRoundPlay()
+            keepScore()
+
+            runningCountContent.textContent = 'You win. Scissors beats Paper';
+            runningCountDiv.appendChild(runningCountContent) 
+
+            return wins;
         }
         
         }
     }
 
-// Plays five rounds and logs how many you've lost or won
-    function game() {
-    var i = null;       
-        do{
-        i++;
-        console.log(playRound())
-       
-    } while(i < 5) {     
-        if(i >= 5) {   
-    return resultsMessage = ("You won this many times: [" + wins + 
-    "]  You lost this many times: [" + loss +
-     "] You tied this many times: [" + tie + "]")
+
+      let displayDiv = document.getElementById('displayDiv');
+      let displayDivTxt = document.createElement('displayDivTxt');
+    
+      displayDivTxt.textContent = ' ';
+      displayDiv.appendChild(displayDivTxt);
+
+// For text
+      let roundResultDiv = document.getElementById('roundResultDiv');
+      let roundResultMsg = document.createElement('roundResultMsg');
+      roundResultMsg.textContent = ' ';
+      roundResultDiv.appendChild(roundResultMsg)
+
+
+      let roundWinsDiv = document.getElementById('roundWinsDiv');
+      let roundWinsTxt = document.createElement('roundWinsTxt');
+      roundWinsTxt.textContent = ' ';
+      roundWinsDiv.appendChild(roundWinsTxt);
+
+      let roundWins = 0;
+      let roundLoss = 0;
+      let roundTie  = 0;
+
+
+function resetScore(){
+  if(total == 4){
+    wins = 0;
+    loss = 0;
+    tie = 0;
+  }
 }
-}   
+
+
+    function getRoundDiv(){
+    let roundWinsStr = ('Round wins = [' + roundWins + '] Round losses =  [' + roundLoss + ']')
+    roundWinsTxt.textContent = roundWinsStr;
+    roundWinsDiv.appendChild(roundWinsTxt);
+  }
+
+  function getTotalWins(){
+    total = (wins + loss + tie);
+  }
+
+function roundWinMsg(){
+  roundResultMsg.textContent = 'You won the round!';
+  roundResultDiv.appendChild(roundResultMsg);
+}
+
+function roundLoseMsg(){
+  roundResultMsg.textContent = 'You lost the round!';
+  roundResultDiv.appendChild(roundResultMsg);
+}
+
+function roundTieMsg(){
+  roundResultMsg.textContent = 'Try again, nobody won!';
+  roundResultDiv.appendChild(roundResultMsg);
+}
+
+
+
+     function keepScore(){ 
+
+        if(total >= 4){
+            if(wins > (loss + tie)){
+              roundWins++
+             roundWinMsg()
+             getRoundDiv()
+             resetScore()
+
+            } else if(loss > (wins + tie)){
+              roundLoss++
+              roundLoseMsg()
+               getRoundDiv()
+               resetScore()
+
+            } else {
+               getRoundDiv()
+               resetScore()
+               roundTieMsg()
+            }
+
+        } else if (total < 4){
+
+        console.log('not 5', total)
+        
+      }
     }
+    
 
 
 </script>
+
 </body>
+
 </html>
 
 
